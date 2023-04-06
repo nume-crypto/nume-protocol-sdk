@@ -8,6 +8,7 @@ import (
 type Client struct {
 	User        *User
 	Transaction *Transaction
+	Protocol    *Protocol
 }
 
 var request *Request
@@ -20,6 +21,7 @@ func NewClient(api_key string) *Client {
 	client := Client{
 		User:        &User{Request: request},
 		Transaction: &Transaction{Request: request},
+		Protocol:    &Protocol{Request: request},
 	}
 	return &client
 }

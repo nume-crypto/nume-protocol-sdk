@@ -1,0 +1,15 @@
+package nume
+
+type Protocol struct {
+	Request *Request
+}
+
+func (protocol *Protocol) GetCurrencies() (map[string]interface{}, error) {
+	url := "get-currencies/"
+	return protocol.Request.Get(url, nil)
+}
+
+func (protocol *Protocol) MonitorStates() (map[string]interface{}, error) {
+	url := "monitor-states"
+	return protocol.Request.Get(url, nil)
+}
