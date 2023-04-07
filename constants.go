@@ -1,5 +1,5 @@
 package nume
 
 const (
-	BASE_URL = "http://localhost:7100/v2/"
+	LOCAL_BASE_URL = "http://localhost:7100/v2/"
 )
