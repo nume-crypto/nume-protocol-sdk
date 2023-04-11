@@ -136,3 +136,24 @@ states, err := client.Protocol.MonitorStates()
 ```
 
 -------------------------------------------------------------------------------------------------------
+
+### Get block number
+
+Endpoint : `GET /get-block-number`
+
+```go
+states, err := client.Protocol.GetBlockNumber()
+```
+
+**Response:**
+
+```json
+{
+    "message": {
+        "BlockNumber": 2
+    },
+    "statusCode": 200
+}
+```
+
+-------------------------------------------------------------------------------------------------------

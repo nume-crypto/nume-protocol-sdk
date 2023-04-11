@@ -13,3 +13,8 @@ func (protocol *Protocol) MonitorStates() (map[string]interface{}, error) {
 	url := "monitor-states"
 	return protocol.Request.Get(url, nil)
 }
+
+func (protocol *Protocol) GetBlockNumber() (map[string]interface{}, error) {
+	url := "get-block-number"
+	return protocol.Request.Get(url, nil)
+}
