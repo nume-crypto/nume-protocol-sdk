@@ -1,80 +1,27 @@
 
 # User
 
-## Create user
+## Fetch user data
 
-Endpoint : `POST /initiate-registration`
+Endpoint : `GET /fetch-user-data/:address`
 
 ```go
-data := map[string]interface{}{
-    "blsG2PublicKey": ["2a7a2b702cd1282c6d615f70b083a76cc290fcaacc9f0c4534a775b23323bbe3","12eae9c0a36ed48fbfce93a81237aa8a8f980514008726e1ba633101862cb22a","15b747f77a80cd966258a2c3769d1ea37f9782263d8e8a74c1c6860a002bcd23","03577a899a7b8e33af9b8d9af42d50bf85f5334c7e78499da6f47bcef78f4d80"],
-    "blsG1PublicKey": ["1a4488372cdfad3051d1f8169ad5a242343258e37b78dcd2b0b3bfb973a5e955","1d702935f31018f7ff285b175c334baf0adb3119bdcb43902ea4a2b84b674b36"],
-    "cmkId": "ABCDEFGH-XXXX-YYYY-ZZZZ-123456789011",
-    "encryptedPrivateKey": "AQICAHhim9vQpNTqtsff2a9psId3gQYMUurhcnwGij0iO6SzMgG1qOPpoK202H0/I7apzbzhAAAAojCBnwYJKoZIhvcNAQcGoIGRMIGOAgEAMIGIBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDF+s/FUDX+6WvGgKLgIBEIBbQTfJ6W3fczjyH5aAdtMXhgSC5S8Zx/tY4lugsgCHBEOefCisfZhiDkrRsw2f408NeMra7BQBbKfBvTLs7aq46JBSnNBjQCSWdwdAYH1yWPB4z+9IY5h0vGc3bA=="
-}
-user, err := client.User.Create(data)
+address := "0x5D9aE648d74dF50746951Cbb2FB296c836A7A0e9"
+user, err := client.User.Get(address)
 ```
 
 **Parameters:**
 
 | Name          | Type        | Description                                 |
 |---------------|-------------|---------------------------------------------|
-| blsG1PublicKey          | [2]string      | User's G1 public key components                        |
-| blsG2PublicKey        | [4]string      | User's G2 public key components                   |
-| cmkId | string | CMK ID used to encrypt user's private key |
-| encryptedPrivateKey      | string      | User's encrypted private key              |
+| address         | string      | Address of the user to be fetched  |
 
 **Response:**
 
 ```json
 {
     "message": {
-        "Id" : "1",
-        "HashedPublicKey": "190ce0ac817bf41f26c665f414e0fc1c955864aff93b28132b2f73ed65522a29",
-        "DepositSignature" : "8a22e585ffa1a11d00c7a3e31cef97e510a0bde2bb7c46b87e0dab636cead4fc4959d75eefcb008964d4be3d111feddb74648b0158e5e1303cde4ad85f080c1d1c",
-        "RegistrationSignature" : "bc14939486e34436c42ab7b7e2c54de1d17f580ed73352b1d8257804d3a144aa417e778d2881922f35e367a0b9359ea51f9a3b7727386cfed43bade741db17811b"
-    },
-    "statusCode": 200
-}
-```
-
--------------------------------------------------------------------------------------------------------
-
-### Fetch user data
-
-Endpoint : `GET /fetch-user-data/:hashedPublicKey`
-
-```go
-user_hashed_publickey := "190ce0ac817bf41f26c665f414e0fc1c955864aff93b28132b2f73ed65522a29"
-user, err := client.User.Get(user_hashed_publickey)
-```
-
-**Parameters:**
-
-| Name          | Type        | Description                                 |
-|---------------|-------------|---------------------------------------------|
-| user_hashed_publickey         | string      | Hashed publickey of the user to be fetched  |
-
-**Response:**
-
-```json
-{
-    "message": {
-        "EncryptedPrivateKey": "AQICAHhim9vQpNTqtsff2a9psId3gQYMUurhcnwGij0iO6SzMgG1qOPpoK202H0/I7apzbzhAAAAojCBnwYJKoZIhvcNAQcGoIGRMIGOAgEAMIGIBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDF+s/FUDX+6WvGgKLgIBEIBbQTfJ6W3fczjyH5aAdtMXhgSC5S8Zx/tY4lugsgCHBEOefCisfZhiDkrRsw2f408NeMra7BQBbKfBvTLs7aq46JBSnNBjQCSWdwdAYH1yWPB4z+9IY5h0vGc3bA==",
-        "CmkId": "4bf5bfc2-75cd-46b2-b657-44aed46bf502",
-        "BlsG1PublicKey": [
-            "1a4488372cdfad3051d1f8169ad5a242343258e37b78dcd2b0b3bfb973a5e955",
-            "1d702935f31018f7ff285b175c334baf0adb3119bdcb43902ea4a2b84b674b36"
-        ],
-        "BlsG2PublicKey": [
-            "2a7a2b702cd1282c6d615f70b083a76cc290fcaacc9f0c4534a775b23323bbe3",
-            "12eae9c0a36ed48fbfce93a81237aa8a8f980514008726e1ba633101862cb22a",
-            "15b747f77a80cd966258a2c3769d1ea37f9782263d8e8a74c1c6860a002bcd23",
-            "03577a899a7b8e33af9b8d9af42d50bf85f5334c7e78499da6f47bcef78f4d80"
-        ],
-        "Nonce": 12,
-        "RegistrationSignature": "bc14939486e34436c42ab7b7e2c54de1d17f580ed73352b1d8257804d3a144aa417e778d2881922f35e367a0b9359ea51f9a3b7727386cfed43bade741db17811b",
-        "DepositSignature": "8a22e585ffa1a11d00c7a3e31cef97e510a0bde2bb7c46b87e0dab636cead4fc4959d75eefcb008964d4be3d111feddb74648b0158e5e1303cde4ad85f080c1d1c"
+        "Nonce": 6
     },
     "statusCode": 200
 }
@@ -84,18 +31,18 @@ user, err := client.User.Get(user_hashed_publickey)
 
 ### Fetch user balance
 
-Endpoint : `GET /fetch-user-balance/:hashedPublicKey`
+Endpoint : `GET /fetch-user-balance/:address`
 
 ```go
-user_hashed_publickey := "190ce0ac817bf41f26c665f414e0fc1c955864aff93b28132b2f73ed65522a29"
-user, err := client.User.GetUserBalance(user_hashed_publickey)
+address := "0x5D9aE648d74dF50746951Cbb2FB296c836A7A0e9"
+user, err := client.User.GetUserBalance(address)
 ```
 
 **Parameters:**
 
 | Name          | Type        | Description                                 |
 |---------------|-------------|---------------------------------------------|
-| user_hashed_publickey          | string      | Hashed publickey of the user to be fetched |
+| address          | string      | Address of the user to be fetched |
 
 **Response:**
 
@@ -104,34 +51,96 @@ user, err := client.User.GetUserBalance(user_hashed_publickey)
     "message": {
         "UserBalances": [
             {
-                "CurrencyId": 1,
-                "Amount": "0",
-                "ContractAddress": "0x799c6832d187243f3367902079A72fb3Fd61cdF7",
-                "Abbreviation": "ETH",
-                "TokenOrder": 5
-            },
-            {
-                "CurrencyId": 2,
-                "Amount": "10739999999999998976",
-                "ContractAddress": "0xEe146Fac7b2fce5FdBE31C36d89cF92f6b006F80",
-                "Abbreviation": "DAI",
-                "TokenOrder": 1
-            },
-            {
                 "CurrencyId": 4,
-                "Amount": "8550000",
+                "Amount": "734630000",
                 "ContractAddress": "0xE9573B8A0AF951431bcBD194E8cc3AeE654Cd723",
-                "Abbreviation": "USDC",
-                "TokenOrder": 2
-            },
-            {
-                "CurrencyId": 3,
-                "Amount": "16328",
-                "ContractAddress": "0x0b6D9aB4c80889b65A61050470CBC5523d8Ce48D",
-                "Abbreviation": "WBTC",
-                "TokenOrder": 4
+                "Abbreviation": "USDC"
             }
         ]
+    },
+    "statusCode": 200
+}
+```
+
+-------------------------------------------------------------------------------------------------------
+
+### Fetch user currency balance
+
+Endpoint : `GET /fetch-user-balance/:address/:tokenAddress`
+
+```go
+address := "0x5D9aE648d74dF50746951Cbb2FB296c836A7A0e9"
+token_address := "0xEe146Fac7b2fce5FdBE31C36d89cF92f6b006F80"
+user, err := client.User.GetUserCurrencyBalance(address)
+```
+
+**Parameters:**
+
+| Name          | Type        | Description                                 |
+|---------------|-------------|---------------------------------------------|
+| address          | string      | Address of the user to be fetched |
+| tokenAddress          | string      | Address of the token to be fetched |
+
+**Response:**
+
+```json
+{
+    "message": {
+        "UserBalances": {
+            "CurrencyId": 4,
+            "Amount": "734630000",
+            "ContractAddress": "0xE9573B8A0AF951431bcBD194E8cc3AeE654Cd723",
+            "Abbreviation": "USDC"
+        }
+    },
+    "statusCode": 200
+}
+```
+
+-------------------------------------------------------------------------------------------------------
+
+### Fetch user proofs
+
+Endpoint : `GET /fetch-user-balance/:address/:tokenAddress`
+
+```go
+address := "0x5D9aE648d74dF50746951Cbb2FB296c836A7A0e9"
+token_address := "0xEe146Fac7b2fce5FdBE31C36d89cF92f6b006F80"
+user, err := client.User.GetUserProof(address)
+```
+
+**Parameters:**
+
+| Name          | Type        | Description                                 |
+|---------------|-------------|---------------------------------------------|
+| address          | string      | Address of the user to be fetched |
+| tokenAddress          | string      | Address of the token to be fetched |
+
+**Response:**
+
+```json
+{
+    "message": {
+        "AccountIndex": 0,
+        "AccountProof": [
+            "0x5306fccd46eeea13a7b7ba988a94514277db096872995cf086250194e5d8367a",
+            "0xe41866f18bc2b9502fccc217a5572755dab1f9ca439846b75c3f91f15dd9c28b",
+            "0x1989cb201b9b6ba3b3a98aeaac29638c95b11fd3e2e77aa7712a8d2095bef2a4",
+            "0xe97e5ec1c1266505544143852b8fd3045e1add92ddaadfb34ee38be20f2c2e7e"
+        ],
+        "AccountProofHelper": [
+            1,
+            1,
+            1
+        ],
+        "BalancesRoot": "0x89d7e77cdef0473233ac43d43df3c7b93c6bfbbf40bdd9c007ed747383946d99",
+        "BalancesProof": [
+            "0xa86d54e9aab41ae5e520ff0062ff1b4cbd0b2192bb01080a058bb170d84e6457",
+            "0x4b4efd86a2cec7174648fca755d3b9caf672051f139e1b37846d357f29e0d889",
+            "0x2a3c055e5aad1f95e094e401d23a52dd4975291cc3ecbaef3a11c98dfdef94b8"
+        ],
+        "Balance": "753820000",
+        "BalancesIndex": 0
     },
     "statusCode": 200
 }
